@@ -8,8 +8,8 @@
       </div>
       <div class="modal-body flex justify-center flex-col">
         <div class="q-mb-xl">
-          <q-input v-model="tempData.name" label="姓名" />
-          <q-input v-model="tempData.age" label="年齡" />
+          <q-input v-model="editTempData.name" label="姓名" />
+          <q-input v-model="editTempData.age" label="年齡" />
         </div>
         <div class="flex justify-center w-1/3 m-auto">
           <a
@@ -17,7 +17,11 @@
             @click.prevent="sendCloseAlert"
             >取消</a
           >
-          <a class="btn bg-green-600 text-white hover:bg-green-800">確定</a>
+          <a
+            class="btn bg-green-600 text-white hover:bg-green-800"
+            @click.prevent="sendEdit"
+            >確定</a
+          >
         </div>
       </div>
     </div>
@@ -29,10 +33,13 @@ import { ref } from 'vue';
 const props = defineProps({
   alertWidth: { type: String },
   isOpnAlert: { type: Boolean },
-  tempData: { type: Object },
+  editTempData: { type: Object },
 });
-const emit = defineEmits(['sendCloseAlert']);
+const emit = defineEmits(['sendCloseAlert', 'sendEdit']);
 const sendCloseAlert = () => {
   emit('sendCloseAlert');
+};
+const sendEdit = () => {
+  emit('sendEdit');
 };
 </script>

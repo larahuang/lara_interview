@@ -81,7 +81,8 @@
       :isOpnAlert="isOpnAlert"
       :alertWidth="alertWidth"
       @sendCloseAlert="closeAlert"
-      :tempData="tempData"
+      :editTempData="editTempData"
+      @sendEdit="handleClickOption"
     />
   </Teleport>
 </template>
@@ -172,28 +173,38 @@ const alertWidth = ref<string>(500);
 const closeAlert = () => {
   isOpnAlert.value = false;
 };
-const handleClickOption = (btn: any, data: any) => {
+const editTempData = ref({
+  name: '',
+  age: '',
+});
+const handleClickOption = (
+  btn: { lable: string; icon: string; states: string },
+  data: { id: string; name: string; age: string }
+) => {
   console.log(btn, data);
   if (btn.icon === 'edit') {
     const api = `http://localhost:3000/posts/${data.id}`;
-    let query = {};
+    let query = {
+      name: editTempData.value.name,
+      age: editTempData.value.age,
+    };
     axios
-      .put(api)
+      .put(api, query)
       .then((res) => {
+        isOpnAlert.value = true;
         getPersonLists();
+        console.log(res);
       })
       .catch((error) => console.log(error));
   }
-  if (btn.icon === 'edit') {
+  if (btn.icon === 'delete') {
     const api = `http://localhost:3000/posts/${data.id}`;
     axios
       .delete(api)
       .then((res) => {
-        if (res.status === 200) {
-          // blockData.value.splice(data.id, 1);
-          isOpnAlert.value = true;
-          getPersonLists();
-        }
+        // blockData.value.splice(data.id, 1);
+        console.log(res);
+        getPersonLists();
       })
       .catch((error) => console.log(error));
   }
