@@ -42,4 +42,18 @@ quasar build
 
 See [Configuring quasar.config.js](https://v2.quasar.dev/quasar-cli-vite/quasar-config-js).
 
-json-server
+### 啟動 json-server db.json
+
+到本專案內的 db 資料夾內
+安裝 json-server
+
+```
+npm install -g json-server
+
+```
+
+啟動 json-server db.json
+
+```
+json-server db.json
+```
